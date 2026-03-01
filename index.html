@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         * { box-sizing: border-box; }
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
         h1 { text-align: center; color: #333; }
-        #downloadBtn { display: block; margin: 20px auto; padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s; }
-        #downloadBtn:hover { background: #0056b3; }
+        #downloadBtn { display: block; margin: 20px auto; padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s; }
+        #downloadBtn:hover { background: #218838; }
         .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; max-width: 1400px; margin: 0 auto; }
         .gallery img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent; }
         .gallery img:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.2); border-color: #007bff; }
@@ -29,7 +28,7 @@
 <body>
     <h1>Published Photo Gallery</h1>
     <p style="text-align: center; color: #666;">Click any image to view full size. Use ← → arrows or on-screen buttons.</p>
-    <button id="downloadBtn">⬇️ Download All Photos (ZIP)</button>
+    <button id="downloadBtn">⬇️ Download All Originals</button>
     <div class="gallery">
         <img src="https://res.cloudinary.com/duwd9bsnr/image/upload/IMG_2294.jpg" alt="IMG_2294.jpg" onclick="openModal(event)">
         <img src="https://res.cloudinary.com/duwd9bsnr/image/upload/IMG_2300.jpg" alt="IMG_2300.jpg" onclick="openModal(event)">
@@ -105,25 +104,20 @@
             }
         });
 
-        async function downloadAll() {
-            const zip = new JSZip();
-            for (let img of galleryImgs) {
-                try {
-                    const response = await fetch(img.src);
-                    const blob = await response.blob();
-                    zip.file(img.alt || 'photo.jpg', blob);
-                } catch (err) {
-                    console.error('Download fail:', img.src);
-                }
+        async function downloadAllIndividual() {
+            for (let i = 0; i < galleryImgs.length; i++) {
+                const img = galleryImgs[i];
+                const a = document.createElement('a');
+                a.href = img.src.replace(/image\/upload\/(v\d+\/)?/, 'image/upload/fl_attachment/'); // Original size
+                a.download = img.alt || `photo_${i + 1}.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                await new Promise(r => setTimeout(r, 200)); // Throttle downloads
             }
-            const content = await zip.generateAsync({type: 'blob'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(content);
-            a.download = 'all-photos.zip';
-            a.click();
         }
 
-        document.getElementById('downloadBtn').onclick = downloadAll;
+        document.getElementById('downloadBtn').onclick = downloadAllIndividual;
     </script>
 </body>
 </html>
