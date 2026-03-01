@@ -1,0 +1,81 @@
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Photo Gallery&lt;/title&gt;
+    &lt;style&gt;
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }
+        h1 { text-align: center; color: #333; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; max-width: 1400px; margin: 0 auto; }
+        .gallery img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent; }
+        .gallery img:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.2); border-color: #007bff; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; }
+        .close { position: absolute; top: 20px; right: 40px; color: #fff; font-size: 48px; font-weight: bold; cursor: pointer; z-index: 1001; }
+        .close:hover { color: #ccc; }
+        .modal-content { position: relative; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .modal-content img { max-width: 90vw; max-height: 90vh; border-radius: 12px; }
+        @media (max-width: 768px) { .gallery { grid-template-columns: 1fr; gap: 12px; } .gallery img { height: 300px; } }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Published Photo Gallery&lt;/h1&gt;
+    &lt;p style=&quot;text-align: center; color: #666;&quot;&gt;Click any image to view full size.&lt;/p&gt;
+    &lt;div class=&quot;gallery&quot;&gt;
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391755/IMG_2294.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391758/IMG_2300.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391760/IMG_2301.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391763/IMG_2304.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391765/IMG_2310.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391768/IMG_2312.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391776/IMG_2313.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391794/IMG_2315.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391798/IMG_2316.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391801/IMG_2317.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391804/IMG_2318.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391806/IMG_2320.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391809/IMG_2321.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391812/IMG_2324.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391814/IMG_2326.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391819/IMG_2329.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391827/IMG_2330.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391831/IMG_2331.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391835/IMG_2334.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391839/IMG_2335.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391845/IMG_2336.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391849/IMG_2338.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391858/IMG_2339.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391867/IMG_2340.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391869/IMG_2343.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391873/IMG_2344.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391881/IMG_2345.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391889/IMG_2346.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391892/IMG_2347.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391894/IMG_2348.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391896/IMG_2350.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391898/IMG_2351.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391900/IMG_2352.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391902/IMG_2353.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391903/IMG_2355.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+        <img src=&quot;https://res.cloudinary.com/duwd9bsnr/image/upload/v1772391905/IMG_2357.jpg&quot; alt=&quot;Photo&quot; onclick=&quot;openModal(this)&quot;>
+    &lt;/div&gt;
+    &lt;div id=&quot;modal&quot; class=&quot;modal&quot; onclick=&quot;closeModal(event)&quot;&gt;
+        &lt;span class=&quot;close&quot; onclick=&quot;closeModal(event)&quot;&gt;&amp;times;&lt;/span&gt;
+        &lt;div class=&quot;modal-content&quot;&gt;
+            &lt;img id=&quot;modalImg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script&gt;
+        function openModal(img) {
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('modalImg').src = img.src;
+        }
+        function closeModal(event) {
+            if (event.target.classList.contains('modal') || event.target.classList.contains('close')) {
+                document.getElementById('modal').style.display = 'none';
+            }
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
